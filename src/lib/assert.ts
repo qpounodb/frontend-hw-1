@@ -16,6 +16,10 @@ export const makeAssertNumberFunc = makeAssertFunc(
   (x): x is number => typeof x === 'number'
 );
 
+export const makeAssertStringFunc = makeAssertFunc(
+  (x): x is string => typeof x === 'string'
+);
+
 export const makeAssertArrayFunc = makeAssertFunc((x): x is unknown[] =>
   Array.isArray(x)
 );
