@@ -1,16 +1,7 @@
-function assertArray<T>(x: unknown): T[] {
-  if (!Array.isArray(x)) {
-    throw new Error('INVALID_ARGUMENT');
-  }
-  return x;
-}
+import { makeAssertArrayFunc, makeAssertNumberFunc } from './lib/assert';
 
-function assertNumber(x: unknown): number {
-  if (typeof x !== 'number') {
-    throw new Error('INVALID_ELEMENT_IN_ARRAY');
-  }
-  return x;
-}
+const assertNumber = makeAssertNumberFunc('INVALID_ELEMENT_IN_ARRAY');
+const assertArray = makeAssertArrayFunc('INVALID_ARGUMENT');
 
 const intersection = (...args: [xs: number[], ys: number[]]): number[] => {
   if (args.length !== 2) {

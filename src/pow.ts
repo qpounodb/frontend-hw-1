@@ -1,8 +1,6 @@
-const assertNumber = (x: unknown): void => {
-  if (typeof x !== 'number') {
-    throw new Error('INVALID_ARGUMENT');
-  }
-};
+import { makeAssertNumberFunc } from './lib/assert';
+
+const assertNumber = makeAssertNumberFunc('INVALID_ARGUMENT');
 
 type PowOnFixedBase = (exponent: number) => number;
 
