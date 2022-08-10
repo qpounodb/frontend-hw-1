@@ -12,14 +12,14 @@ function makeAssertFunc<T>(checkType: CheckType<T>): CustomAssertFunc<T> {
     };
 }
 
+type Func = (...args: unknown[]) => unknown;
+
 export const isNumber = (x: unknown): x is number => typeof x === 'number';
 export const isString = (x: unknown): x is string => typeof x === 'string';
+export const isFunction = (x: unknown): x is Func => typeof x === 'function';
 export const isArray = (x: unknown): x is unknown[] => Array.isArray(x);
 export const isObject = (x: unknown): x is object =>
   x !== null && !Array.isArray(x) && typeof x === 'object';
-// eslint-disable-next-line @typescript-eslint/ban-types
-export const isFunction = (x: unknown): x is Function =>
-  typeof x === 'function';
 
 export const makeAssertNumberFunc = makeAssertFunc(isNumber);
 export const makeAssertStringFunc = makeAssertFunc(isString);
