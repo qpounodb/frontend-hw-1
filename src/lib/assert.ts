@@ -14,11 +14,19 @@ function makeAssertFunc<T>(checkType: CheckType<T>): CustomAssertFunc<T> {
 
 type Func = (...args: unknown[]) => unknown;
 
-export const isNumber = (x: unknown): x is number => typeof x === 'number';
-export const isString = (x: unknown): x is string => typeof x === 'string';
-export const isFunction = (x: unknown): x is Func => typeof x === 'function';
-export const isArray = (x: unknown): x is unknown[] => Array.isArray(x);
-export const isObject = (x: unknown): x is object =>
+export const isNumber: CheckType<number> = (x): x is number =>
+  typeof x === 'number';
+
+export const isString: CheckType<string> = (x): x is string =>
+  typeof x === 'string';
+
+export const isFunction: CheckType<Func> = (x): x is Func =>
+  typeof x === 'function';
+
+export const isArray: CheckType<unknown[]> = (x): x is unknown[] =>
+  Array.isArray(x);
+
+export const isObject: CheckType<object> = (x): x is object =>
   x !== null && !Array.isArray(x) && typeof x === 'object';
 
 export const makeAssertNumberFunc = makeAssertFunc(isNumber);
