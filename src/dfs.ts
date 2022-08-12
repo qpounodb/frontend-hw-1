@@ -7,22 +7,29 @@ type Tree = Record<Node, Node[]>;
 
 const dfs = (tree: Tree): Node[] => {
   const root = Object.keys(assertObject(tree)).at(0);
-  return recDfs(tree, root);
+  return root === undefined ? [] : dfsOnStack(tree, root);
 };
 
 export default dfs;
 
-function recDfs(tree: Tree, root?: Node, nodes: Node[] = []): Node[] {
-  if (root === undefined) {
-    return nodes;
-  }
+interface Meta {
+  node: Node;
+  visits: number;
+}
 
-  nodes.push(root);
-  const childs = tree[root].slice();
-
-  while (childs.length !== 0) {
-    const nextRoot = childs.shift();
-    recDfs(tree, nextRoot, nodes);
+function dfsOnStack(tree: Tree, root: Node): Node[] {
+  const stack: Meta[] = [{ node: root, visits: 0 }];
+  const result: Node[] = [];
+  while (stack.length > 0) {
+    const { node, visits } = stack.pop()!;
+    if (visits === 0) {
+      result.push(node);
+    }
+    const nextRoot = tree[node].at(visits);
+    if (nextRoot !== undefined) {
+      stack.push({ node, visits: visits + 1 });
+      stack.push({ node: nextRoot, visits: 0 });
+    }
   }
-  return nodes;
+  return result;
 }
